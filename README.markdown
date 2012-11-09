@@ -29,3 +29,9 @@ When you want to restore your saved configuration:
 The configuration file is saved at:
 
     ~/.fenetre_sessions
+
+Usage
+-----
+* Open NERDTree When BufferName is NERD_tree_1
+* Make sure FenetreSaveSession bring cursor back in right window
+* User should be able to save a session configuration with a specific name
