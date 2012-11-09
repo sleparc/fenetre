@@ -95,9 +95,9 @@ class Fenetre
     end
 
     def go_to_top_left
-      currentWindowPosition = -1
-      while currentWindowPosition != current_buffer
-        currentWindowPosition = current_buffer
+      current_window_position = -1
+      while current_window_position != current_buffer
+        current_window_position = current_buffer
         go(:left)
       end
     end
