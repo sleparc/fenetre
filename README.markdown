@@ -30,7 +30,7 @@ The configuration file is saved at:
 
     ~/.fenetre_sessions
 
-Usage
+ToDos
 -----
 * Open NERDTree When BufferName is NERD_tree_1
 * Make sure FenetreSaveSession bring cursor back in right window
