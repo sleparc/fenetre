@@ -1,0 +1,163 @@
+*fenetre.txt* Fenetre plug-in for Vim           *fenetre*
+
+CONTENTS                                        *fenetre-contents*
+
+ 1. Introduction            |fenetre-intro|
+ 2. Requirements            |fenetre-requirements|
+ 3. Installation            |fenetre-installation|
+ 3. Managing using Pathogen |fenetre-pathogen|
+ 4. Usage                   |fenetre-usage|
+ 5. Commands                |fenetre-commands|
+ 6. Author                  |fenetre-author|
+ 7. License                 |fenetre-license|
+ 8. History                 |fenetre-history|
+
+
+INTRODUCTION                                    *fenetre-intro*
+
+The Fenetre plug-in provides a very easy way to recover windows session when
+starting your Vim editor. Windows are very powerful in Vim since you can 
+split them and organize your view to your specific needs. Fenetre is the 
+perfect tool to manage them.
+
+
+REQUIREMENTS                                    *fenetre-requirements*
+
+The plug-in requires Vim compiled with Ruby support, a compatible Ruby
+installation at the operating system level, and a C compiler to build
+the Ruby extension.
+
+
+1. Vim compiled with Ruby support
+
+You can check for Ruby support by launching Vim with the --version switch:
+
+  vim --version
+
+If "+ruby" appears in the version information then your version of Vim has
+Ruby support.
+
+Another way to check is to simply try using the :ruby command from within Vim
+itself:
+
+  :ruby 1
+
+If your Vim lacks support you'll see an error message like this:
+
+  E319: Sorry, the command is not available in this version
+
+The version of Vim distributed with Mac OS X does not include Ruby support,
+while MacVim does; it is available from:
+
+  http://github.com/b4winckler/macvim/downloads
+
+For Windows users, the Vim 7.2 executable available from www.vim.org does
+include Ruby support, and is recommended over version 7.3 (which links against
+Ruby 1.9, but apparently has some bugs that need to be resolved).
+
+
+2. Ruby
+
+In addition to having Ruby support in Vim, your system itself must have a
+compatible Ruby install. "Compatible" means the same version as Vim itself
+links against.
+
+On Mac OS X Snow Leopard, the system comes with Ruby 1.8.7 and all recent
+versions of MacVim (the 7.2 snapshots and 7.3) are linked against it.
+
+On Linux and similar platforms, the linked version of Ruby will depend on
+your distribution. You can usually find this out by examining the
+compilation and linking flags displayed by the |:version| command in Vim, and
+by looking at the output of:
+
+  :ruby puts RUBY_VERSION
+
+A suitable Ruby environment for Windows can be installed using the Ruby
+1.8.7-p299 RubyInstaller available at:
+
+  http://rubyinstaller.org/downloads/archives
+
+If using RubyInstaller be sure to download the installer executable, not the
+7-zip archive. When installing mark the checkbox "Add Ruby executables to your
+PATH" so that Vim can find them.
+
+
+INSTALLATION                                    *fenetre-installation*
+
+Fenetre was developed to be compatible with Pathogen, see next section for
+installation details.
+
+
+MANAGING USING PATHOGEN                         *fenetre-pathogen*
+
+Pathogen is a plugin that allows you to maintain plugin installations in
+separate, isolated subdirectories under the "bundle" directory in your
+|'runtimepath'|. The following examples assume that you already have
+Pathogen installed and configured, and that you are installing into
+~/.vim/bundle. For more information about Pathogen, see:
+
+  http://www.vim.org/scripts/script.php?script_id=2332
+  https://github.com/tpope/vim-pathogen
+
+
+  cd ~/.vim/bundle
+  git clone git://github.com/sleparc/fenetre.git
+
+Once you have a local copy of the repository you can update it at any time
+with:
+
+  cd ~/.vim/bundle/fenetre
+  git pull
+
+
+USAGE                                           *fenetre-usage*
+
+The window splits are autosaved on editor close but you can save them
+manually. See next section for commands.
+
+
+COMMANDS                                        *fenetre-commands*
+
+                                                *:FenetreSaveSession*
+|:FenetreSaveSession|  Go through all of the window locations and save their positions
+
+                                                *:FenetreOpenSession*
+|:FenetreOpenSession|  Opens up the windows saved in the session file
+(~/.fenetre_session)
+
+
+AUTHOR                                          *fenetre-author*
+
+Fenetre is written and maintained by Simon Le Parc <lpl.simon at gmail got com>.
+
+
+LICENSE                                         *fenetre-license*
+
+Copyright (C) 2012 by Simon Le Parc and contributors.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be included in all copies
+or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR
+A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+HISTORY                                         *fenetre-history*
+
+0.1 (08 November 2012)
+
+- initial public release
+
+------------------------------------------------------------------------------
+vim:tw=78:ft=help:
