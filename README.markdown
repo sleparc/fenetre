@@ -18,10 +18,14 @@ Usage
 -----
 
 When you want to save your current configuration:
-:call FenetreSaveSession()
+
+    :call FenetreSaveSession()
 
 When you want to restore your saved configuration:
-:call FenetreOpenSession()
+
+    :call FenetreOpenSession()
 
 
-The configuration file is saved at: ~/.fenetre_sessions
+The configuration file is saved at:
+
+    ~/.fenetre_sessions
