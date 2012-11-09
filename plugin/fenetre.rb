@@ -1,6 +1,8 @@
 require 'yaml'
 
 class Fenetre
+  SESSION_FILE = File.expand_path("~/.fenetre_sessions")
+
   class << self
     def save_session
       windows_config = []
@@ -32,8 +34,7 @@ class Fenetre
         go(:right)
       end
 
-      filename = File.expand_path("~/.fenetre_sessions")
-      File.open(filename, 'w') {|f| f.write(windows_config.to_yaml) }
+      File.open(SESSION_FILE, 'w') {|f| f.write(windows_config.to_yaml) }
     end
 
     def open_session
@@ -59,7 +60,7 @@ class Fenetre
         @level -= 1
       end
 
-      positions = YAML::load(File.read(File.expand_path("~/.abc")))
+      positions = YAML::load(File.read(SESSION_FILE))
 
       open_windows(positions, @dirs[@level % 2])
     end

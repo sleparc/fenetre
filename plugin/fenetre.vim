@@ -12,40 +12,18 @@ ruby << EOF
   require file
 EOF
 
+autocmd BufAdd,BufCreate,BufDelete,BufWipeout,BufNew,BufHidden,BufUnload,VimLeavePre * call FenetreSaveSession()
 
-function! FenetrePositions()
-  let s:WindowPositions = []
-  let s:colNum = 0
-  let s:rowNum = 0
+function! FenetreSaveSession()
+ruby << EOF
+  Fenetre.save_session
+EOF
+endfunction
 
-  call s:GoToTopLeftWindow()
-  let s:currentWindowPosition = -1
-
-
-  " horizontal direction
-  while s:currentWindowPosition != bufnr( "%" )
-    let s:ColumnWindowPositions = []
-
-    " go down
-    while s:currentWindowPosition != bufnr( "%" )
-      let s:currentWindowPosition = bufnr( "%" )
-      call add(s:ColumnWindowPositions, bufname(s:currentWindowPosition))
-      wincmd j
-    endwhile
-
-    call add(s:WindowPositions, s:ColumnWindowPositions)
-
-    "go back up
-    wincmd k
-    while s:currentWindowPosition != bufnr( "%" )
-      let s:currentWindowPosition = bufnr( "%" )
-      wincmd k
-    endwhile
-    " go right
-    wincmd l
-  endwhile
-
-  call s:SavePositionsToFile(WindowPositions)
+function! FenetreOpenSession()
+ruby << EOF
+  Fenetre.open_session
+EOF
 endfunction
 
 function! s:SavePositionsToFile(WindowPositions)
@@ -63,11 +41,3 @@ function! s:GoToTopLeftWindow()
     wincmd h
   endwhile
 endfunction
-
-function! ReadFenetrePos()
-ruby << EOF
-  Fenetre.reopen_windows
-EOF
-endfunction
-
-
