@@ -12,7 +12,7 @@ ruby << EOF
   require file
 EOF
 
-autocmd BufAdd,BufCreate,BufDelete,BufWipeout,BufNew,BufHidden,BufUnload,VimLeavePre * call FenetreSaveSession()
+autocmd InsertEnter,VimLeavePre * call FenetreSaveSession()
 
 function! FenetreSaveSession()
 ruby << EOF
@@ -26,18 +26,4 @@ ruby << EOF
 EOF
 endfunction
 
-function! s:SavePositionsToFile(WindowPositions)
-ruby << EOF
-  require 'yaml'
-  File.open(File.expand_path("~/.abc"), 'w') {|f| f.write(VIM::evaluate("a:WindowPositions").to_yaml) }
-EOF
-endfunction
 
-function! s:GoToTopLeftWindow()
-  let s:currentWindowPosition = -1
-
-  while s:currentWindowPosition != bufnr( "%" )
-    let s:currentWindowPosition = bufnr( "%" )
-    wincmd h
-  endwhile
-endfunction

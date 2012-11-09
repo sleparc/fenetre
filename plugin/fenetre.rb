@@ -9,7 +9,7 @@ class Fenetre
       col_num = 0
       row_num = 0
 
-      VIM.command("call s:GoToTopLeftWindow()")
+      go_to_top_left
 
       current_window_position = -1
       # horizontal direction
@@ -90,8 +90,16 @@ class Fenetre
     end
 
     def go(direction)
-      mapping = {:down => 'j', :up => 'k', :right => 'l'}
+      mapping = {:down => 'j', :up => 'k', :left => 'h', :right => 'l'}
       VIM.command("wincmd " + mapping[direction])
+    end
+
+    def go_to_top_left
+      currentWindowPosition = -1
+      while currentWindowPosition != current_buffer
+        currentWindowPosition = current_buffer
+        go(:left)
+      end
     end
 
   end
