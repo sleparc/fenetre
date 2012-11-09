@@ -34,7 +34,9 @@ class Fenetre
         go(:right)
       end
 
-      File.open(SESSION_FILE, 'w') {|f| f.write(windows_config.to_yaml) }
+      File.open(SESSION_FILE, 'w') do |f|
+        f.write(windows_config.to_yaml)
+      end
     end
 
     def open_session
