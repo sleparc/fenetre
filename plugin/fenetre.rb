@@ -2,7 +2,41 @@ require 'yaml'
 
 class Fenetre
   class << self
-    def reopen_windows
+    def save_session
+      windows_config = []
+      col_num = 0
+      row_num = 0
+
+      VIM.command("call s:GoToTopLeftWindow()")
+
+      current_window_position = -1
+      # horizontal direction
+
+      while current_window_position != current_buffer
+        column_window_positions = []
+
+        # go down
+        while current_window_position != current_buffer
+          current_window_position = current_buffer
+          column_window_positions << bufname(current_window_position)
+          go(:down)
+        end
+
+        windows_config << column_window_positions
+
+        go(:up)
+        while current_window_position != current_buffer
+          current_window_position = current_buffer
+          go(:up)
+        end
+        go(:right)
+      end
+
+      filename = File.expand_path("~/.fenetre_sessions")
+      File.open(filename, 'w') {|f| f.write(windows_config.to_yaml) }
+    end
+
+    def open_session
       @first_window = true
       @level = -1
       @dirs = ["open_split", "open_v_split"]
@@ -26,7 +60,6 @@ class Fenetre
       end
 
       positions = YAML::load(File.read(File.expand_path("~/.abc")))
-      # positions = ["bundle/fenetre/test/a.txt", ["bundle/fenetre/test/b.txt", "bundle/fenetre/test/c.txt"]]
 
       open_windows(positions, @dirs[@level % 2])
     end
@@ -35,7 +68,7 @@ class Fenetre
 
     def open_split(window)
       VIM.command("split")
-      VIM.command("wincmd j")
+      go(:down)
       VIM.command("e " + window)
     end
 
@@ -45,6 +78,19 @@ class Fenetre
 
     def first_window(window)
       VIM.command("e " + window)
+    end
+
+    def current_buffer
+      VIM.evaluate('bufnr( "%" )')
+    end
+
+    def bufname(number)
+      VIM.evaluate("bufname(#{number})")
+    end
+
+    def go(direction)
+      mapping = {:down => 'j', :up => 'k', :right => 'l'}
+      VIM.command("wincmd " + mapping[direction])
     end
 
   end
