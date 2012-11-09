@@ -12,7 +12,7 @@ ruby << EOF
   require file
 EOF
 
-autocmd InsertEnter,VimLeavePre * call FenetreSaveSession()
+autocmd VimLeavePre * call FenetreSaveSession()
 
 function! FenetreSaveSession()
 ruby << EOF
