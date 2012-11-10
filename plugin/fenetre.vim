@@ -23,7 +23,7 @@ command! FenetreOpenSession :call FenetreOpenSession()
 
 " ----- Public Functions -----
 ruby << EOF
-  file = File.join(ENV['HOME'], '.vim', 'bundle', 'fenetre', 'plugin', 'fenetre')
+  file = File.join(ENV['HOME'], '.vim', 'bundle', 'fenetre', 'plugin', 'ruby', 'fenetre')
   require file
 EOF
 

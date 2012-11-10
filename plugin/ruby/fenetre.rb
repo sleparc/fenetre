@@ -51,6 +51,12 @@ class Fenetre
       end
     end
 
+    # open_session
+    #
+    # This method gets the window positions save in the file and reopens them
+    # based on the array structure.
+    #
+
     def open_session
       positions = YAML::load(File.read(SESSION_FILE))
 
