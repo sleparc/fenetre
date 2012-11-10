@@ -24,12 +24,12 @@ class Fenetre
       row_num = 0
 
       current_window_position = -1
-      # horizontal direction
 
+      # move to the right until the end
       while current_window_position != Viml.current_buffer
         column_window_positions = []
 
-        # go down
+        # move all the way down and add windows to array as we go
         while current_window_position != Viml.current_buffer
           current_window_position = Viml.current_buffer
           column_window_positions << Viml.bufname(current_window_position)
@@ -38,11 +38,14 @@ class Fenetre
 
         windows_config << column_window_positions
 
+        # move cursor all the way up
         Viml.go(:up)
         while current_window_position != Viml.current_buffer
           current_window_position = Viml.current_buffer
           Viml.go(:up)
         end
+
+        # move on to the next column to the right
         Viml.go(:right)
       end
 
@@ -56,6 +59,24 @@ class Fenetre
     #
     # This method gets the window positions save in the file and reopens them
     # based on the array structure.
+    #
+    # The algorithm uses recursion to reopen each window based on the saved array.
+    #
+    # See example:
+    # 
+    #                              -------------------------
+    #                              |       |       |       |
+    #                              |       |   3   |       |
+    #                              |   1   |       |   6   |
+    #                              |       |-------|       |
+    #                              |       |       |       |
+    # [[1,2],[3,4,5],[6,7]] to =>  |-------|   4   |-------|
+    #                              |       |       |       |
+    #                              |   2   |-------|       |
+    #                              |       |       |   7   |
+    #                              |       |   5   |       |
+    #                              |       |       |       |
+    #                              -------------------------
     #
 
     def open_session
