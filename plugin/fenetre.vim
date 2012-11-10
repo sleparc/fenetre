@@ -2,17 +2,29 @@
 " File:        fenetre.vim
 " Description: This pluggin remember and can re-open your splits/windows
 " Maintainer:  Simon Le Parc <lpl.simon at gmail dot com>
-" Last Change: 08 November, 2012
+" Last Change: 09 November, 2012
 " License:     MIT (see LICENCE file)
 "
 " ============================================================================
 
+
+" ----- Autocommands -----
+augroup Fenetre
+  autocmd!
+  au VimLeavePre * call FenetreSaveSession()
+augroup END
+
+
+" ----- Commands -----
+command! FenetreSaveSession :call FenetreSaveSession()
+command! FenetreOpenSession :call FenetreOpenSession()
+
+
+" ----- Public Functions -----
 ruby << EOF
   file = File.join(ENV['HOME'], '.vim', 'bundle', 'fenetre', 'plugin', 'fenetre')
   require file
 EOF
-
-autocmd VimLeavePre * call FenetreSaveSession()
 
 function! FenetreSaveSession()
 ruby << EOF
@@ -25,5 +37,3 @@ ruby << EOF
   Fenetre.open_session
 EOF
 endfunction
-
-
