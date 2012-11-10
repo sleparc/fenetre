@@ -1,6 +1,7 @@
 " ============================================================================
 " File:        fenetre.vim
-" Description: This pluggin remember and can re-open your splits/windows
+" Description: This pluggin remembers the way you split your windows
+"              and can reopen them.
 " Maintainer:  Simon Le Parc <lpl.simon at gmail dot com>
 " Last Change: 09 November, 2012
 " License:     MIT (see LICENCE file)
