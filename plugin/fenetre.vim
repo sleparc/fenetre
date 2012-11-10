@@ -23,10 +23,8 @@ command! FenetreOpenSession :call FenetreOpenSession()
 
 " ----- Public Functions -----
 ruby << EOF
-  file = File.join(ENV['HOME'], '.vim', 'bundle', 'fenetre', 'plugin', 'ruby', 'fenetre')
-  require file
-  file = File.join(ENV['HOME'], '.vim', 'bundle', 'fenetre', 'plugin', 'ruby', 'viml')
-  require file
+  ruby_dir = File.join(ENV['HOME'], '.vim', 'bundle', 'fenetre', 'plugin', 'ruby')
+  Dir["#{ruby_dir}/*.rb"].each {|file| require file }
 EOF
 
 function! FenetreSaveSession()
