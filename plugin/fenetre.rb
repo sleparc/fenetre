@@ -4,12 +4,24 @@ class Fenetre
   SESSION_FILE = File.expand_path("~/.fenetre_sessions")
 
   class << self
+
+    # save_session
+    #
+    # This method starts from the window at the top most left of the screen
+    # and then, while going to the right, scans the position of each window
+    # going down. When at the bottom (can't move down anymore), it goes back
+    # up and move to the right and repeat until it gets to the far most right
+    # (can't move right anymore).
+    # At every step, the filename opened in the window is saved in an array
+    # which is eventually saved into a file at the end.
+    #
+
     def save_session
+      go_to_top_left
+
       windows_config = []
       col_num = 0
       row_num = 0
-
-      go_to_top_left
 
       current_window_position = -1
       # horizontal direction
