@@ -17,7 +17,7 @@ class Fenetre
     #
 
     def save_session
-      go_to_top_left
+      Viml.go_to_top_left
 
       windows_config = []
       col_num = 0
@@ -26,30 +26,31 @@ class Fenetre
       current_window_position = -1
       # horizontal direction
 
-      while current_window_position != current_buffer
+      while current_window_position != Viml.current_buffer
         column_window_positions = []
 
         # go down
-        while current_window_position != current_buffer
-          current_window_position = current_buffer
-          column_window_positions << bufname(current_window_position)
-          go(:down)
+        while current_window_position != Viml.current_buffer
+          current_window_position = Viml.current_buffer
+          column_window_positions << Viml.bufname(current_window_position)
+          Viml.go(:down)
         end
 
         windows_config << column_window_positions
 
-        go(:up)
-        while current_window_position != current_buffer
-          current_window_position = current_buffer
-          go(:up)
+        Viml.go(:up)
+        while current_window_position != Viml.current_buffer
+          current_window_position = Viml.current_buffer
+          Viml.go(:up)
         end
-        go(:right)
+        Viml.go(:right)
       end
 
       File.open(SESSION_FILE, 'w') do |f|
         f.write(windows_config.to_yaml)
       end
     end
+
 
     # open_session
     #
@@ -67,6 +68,7 @@ class Fenetre
       open_windows(positions, @dirs[@level % 2])
     end
 
+
     private
 
     def open_windows(windows, direction_action)
@@ -80,46 +82,11 @@ class Fenetre
           action = direction_action if (@level == -1)
           first_one = false
           @first_window = false
-          send(action, window)
+          Viml.send(action, window)
         end
       end
 
       @level -= 1
-    end
-
-    def open_split(window)
-      VIM.command("split")
-      go(:down)
-      VIM.command("e " + window)
-    end
-
-    def open_v_split(window)
-      VIM.command("botright vnew " + window)
-    end
-
-    def first_window(window)
-      VIM.command("e " + window)
-    end
-
-    def current_buffer
-      VIM.evaluate('bufnr( "%" )')
-    end
-
-    def bufname(number)
-      VIM.evaluate("bufname(#{number})")
-    end
-
-    def go(direction)
-      mapping = {:down => 'j', :up => 'k', :left => 'h', :right => 'l'}
-      VIM.command("wincmd " + mapping[direction])
-    end
-
-    def go_to_top_left
-      current_window_position = -1
-      while current_window_position != current_buffer
-        current_window_position = current_buffer
-        go(:left)
-      end
     end
 
   end
