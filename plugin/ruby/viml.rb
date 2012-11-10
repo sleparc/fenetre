@@ -1,5 +1,4 @@
 module Viml
-
   def self.open_split(window)
     VIM.command("split")
     go(:down)
